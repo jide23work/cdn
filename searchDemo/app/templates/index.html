@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{#    <meta name="viewport" content="width=device-width-100px, initial-scale=1">#}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>试题搜索平台</title>
+    <!-- local link-->
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <link rel="icon" href="{% static 'icon/favicon.png'%}">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+<body onload="document.forms.form_name.mykey.focus()">
+<div class="container-fluid">
+    <div class="search-wrap" style="margin: 50px 20px;">
+        <div class="row">
+            <div class="col-sm-2 col-md-3 col-lg-4"></div>
+            <div class="col-sm-8 col-md-6 col-lg-4">
+                <form method="get" action="/search/" name="form_name">
+                    {% csrf_token %}
+                    <div class="input-group input-group-lg">
+                        <input type="text" name="mykey" class="form-control" placeholder="请输入题目关键字" required/>
+                        <span class="input-group-btn">
+                            <input type="submit" class="btn btn-default" value="查询"/>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-2 col-md-3 col-lg-4"></div>
+        </div>
+    </div>
+    <div class="result-wrap">
+        <div class="col-sm-1 col-md-1 col-lg-2"></div>
+        <div class="col-sm-10 col-md-10 col-lg-8">
+            {% if post_list %}
+            {% for post in post_list %}
+{#                <h3 style="font-size: x-large">{{ post.title }}</h3>#}
+{#                <p style="font-size: medium; color: #5cb85c; margin-bottom: 30px">{{ post.body }}</p>#}
+                <div class="panel panel-default">
+                    <div class="panel-body" style="font-size: large; margin: 5px 0px"><span class="label label-warning" style="margin: 0px 20px 0px 8px">{{ post.type }}</span>{{ post.title }}</div>
+                    <div class="panel-footer" style="color: #5cb85c;">{{ post.body }}</div>
+                </div>
+            {% endfor %}
+            {% else %}
+                <h4 style="text-align: center">没有查询数据</h4>
+            {% endif %}
+        </div>
+        <div class="col-sm-1 col-md-1 col-lg-2"></div>
+
+    </div>
+</div>
+</body>
+</html>
